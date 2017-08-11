@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cvte.part.dao.SpecificationDesDetailMapper">
+  <resultMap id="BaseResultMap" type="com.cvte.part.bean.SpecificationDesDetail">
+    <id column="spec_des_detail_id" jdbcType="VARCHAR" property="specDesDetailId" />
+    <result column="property_name" jdbcType="VARCHAR" property="propertyName" />
+    <result column="property_value" jdbcType="VARCHAR" property="propertyValue" />
+    <result column="spec_des_id" jdbcType="VARCHAR" property="specDesId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    spec_des_detail_id, property_name, property_value, spec_des_id
+  </sql>
+  <select id="selectByExample" parameterType="com.cvte.part.bean.SpecificationDesDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from specification_des_detail_tb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from specification_des_detail_tb
+    where spec_des_detail_id = #{specDesDetailId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from specification_des_detail_tb
+    where spec_des_detail_id = #{specDesDetailId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cvte.part.bean.SpecificationDesDetailExample">
+    delete from specification_des_detail_tb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cvte.part.bean.SpecificationDesDetail">
+    insert into specification_des_detail_tb (spec_des_detail_id, property_name, property_value, 
+      spec_des_id)
+    values (#{specDesDetailId,jdbcType=VARCHAR}, #{propertyName,jdbcType=VARCHAR}, #{propertyValue,jdbcType=VARCHAR}, 
+      #{specDesId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cvte.part.bean.SpecificationDesDetail">
+    insert into specification_des_detail_tb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="specDesDetailId != null">
+        spec_des_detail_id,
+      </if>
+      <if test="propertyName != null">
+        property_name,
+      </if>
+      <if test="propertyValue != null">
+        property_value,
+      </if>
+      <if test="specDesId != null">
+        spec_des_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="specDesDetailId != null">
+        #{specDesDetailId,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyName != null">
+        #{propertyName,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyValue != null">
+        #{propertyValue,jdbcType=VARCHAR},
+      </if>
+      <if test="specDesId != null">
+        #{specDesId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cvte.part.bean.SpecificationDesDetailExample" resultType="java.lang.Long">
+    select count(*) from specification_des_detail_tb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update specification_des_detail_tb
+    <set>
+      <if test="record.specDesDetailId != null">
+        spec_des_detail_id = #{record.specDesDetailId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.propertyName != null">
+        property_name = #{record.propertyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.propertyValue != null">
+        property_value = #{record.propertyValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specDesId != null">
+        spec_des_id = #{record.specDesId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update specification_des_detail_tb
+    set spec_des_detail_id = #{record.specDesDetailId,jdbcType=VARCHAR},
+      property_name = #{record.propertyName,jdbcType=VARCHAR},
+      property_value = #{record.propertyValue,jdbcType=VARCHAR},
+      spec_des_id = #{record.specDesId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cvte.part.bean.SpecificationDesDetail">
+    update specification_des_detail_tb
+    <set>
+      <if test="propertyName != null">
+        property_name = #{propertyName,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyValue != null">
+        property_value = #{propertyValue,jdbcType=VARCHAR},
+      </if>
+      <if test="specDesId != null">
+        spec_des_id = #{specDesId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where spec_des_detail_id = #{specDesDetailId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cvte.part.bean.SpecificationDesDetail">
+    update specification_des_detail_tb
+    set property_name = #{propertyName,jdbcType=VARCHAR},
+      property_value = #{propertyValue,jdbcType=VARCHAR},
+      spec_des_id = #{specDesId,jdbcType=VARCHAR}
+    where spec_des_detail_id = #{specDesDetailId,jdbcType=VARCHAR}
+  </update>
+</mapper>

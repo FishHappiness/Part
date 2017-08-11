@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cvte.part.dao.PartItemMapper">
+  <resultMap id="BaseResultMap" type="com.cvte.part.bean.PartItem">
+    <id column="part_item_id" jdbcType="VARCHAR" property="partItemId" />
+    <result column="part_item_name" jdbcType="VARCHAR" property="partItemName" />
+    <result column="part_class_id" jdbcType="VARCHAR" property="partClassId" />
+    <result column="spec_des_id" jdbcType="VARCHAR" property="specDesId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    part_item_id, part_item_name, part_class_id, spec_des_id
+  </sql>
+  <select id="selectByExample" parameterType="com.cvte.part.bean.PartItemExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from part_item_tb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from part_item_tb
+    where part_item_id = #{partItemId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from part_item_tb
+    where part_item_id = #{partItemId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cvte.part.bean.PartItemExample">
+    delete from part_item_tb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cvte.part.bean.PartItem">
+    insert into part_item_tb (part_item_id, part_item_name, part_class_id, 
+      spec_des_id)
+    values (#{partItemId,jdbcType=VARCHAR}, #{partItemName,jdbcType=VARCHAR}, #{partClassId,jdbcType=VARCHAR}, 
+      #{specDesId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cvte.part.bean.PartItem">
+    insert into part_item_tb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="partItemId != null">
+        part_item_id,
+      </if>
+      <if test="partItemName != null">
+        part_item_name,
+      </if>
+      <if test="partClassId != null">
+        part_class_id,
+      </if>
+      <if test="specDesId != null">
+        spec_des_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="partItemId != null">
+        #{partItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="partItemName != null">
+        #{partItemName,jdbcType=VARCHAR},
+      </if>
+      <if test="partClassId != null">
+        #{partClassId,jdbcType=VARCHAR},
+      </if>
+      <if test="specDesId != null">
+        #{specDesId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cvte.part.bean.PartItemExample" resultType="java.lang.Long">
+    select count(*) from part_item_tb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update part_item_tb
+    <set>
+      <if test="record.partItemId != null">
+        part_item_id = #{record.partItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partItemName != null">
+        part_item_name = #{record.partItemName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partClassId != null">
+        part_class_id = #{record.partClassId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specDesId != null">
+        spec_des_id = #{record.specDesId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update part_item_tb
+    set part_item_id = #{record.partItemId,jdbcType=VARCHAR},
+      part_item_name = #{record.partItemName,jdbcType=VARCHAR},
+      part_class_id = #{record.partClassId,jdbcType=VARCHAR},
+      spec_des_id = #{record.specDesId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cvte.part.bean.PartItem">
+    update part_item_tb
+    <set>
+      <if test="partItemName != null">
+        part_item_name = #{partItemName,jdbcType=VARCHAR},
+      </if>
+      <if test="partClassId != null">
+        part_class_id = #{partClassId,jdbcType=VARCHAR},
+      </if>
+      <if test="specDesId != null">
+        spec_des_id = #{specDesId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where part_item_id = #{partItemId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cvte.part.bean.PartItem">
+    update part_item_tb
+    set part_item_name = #{partItemName,jdbcType=VARCHAR},
+      part_class_id = #{partClassId,jdbcType=VARCHAR},
+      spec_des_id = #{specDesId,jdbcType=VARCHAR}
+    where part_item_id = #{partItemId,jdbcType=VARCHAR}
+  </update>
+</mapper>
